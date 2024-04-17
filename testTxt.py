@@ -2,7 +2,7 @@ import os
 from openpyxl import Workbook
 
 # Definisci la cartella contenente i file .txt
-cartella = 'C:\\Users\\Francesco\\Desktop\\chekerCpu\\'
+cartella = 'C:\\\\\\\\\\' #your path remember double \ between
 
 # Lista dei file nella cartella
 files = os.listdir(cartella)
