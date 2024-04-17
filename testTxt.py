@@ -1,14 +1,35 @@
 import os
 from openpyxl import Workbook
+from openpyxl.worksheet.table import Table, TableStyleInfo,TableColumn 
 
 # Definisci la cartella contenente i file .txt
-cartella = 'C:\\\\\\\\\\' #your path remember double \ between
+cartella = 'C:\\Users\\Francesco\\Desktop\\chekerCpu\\'
 
 # Lista dei file nella cartella
 files = os.listdir(cartella)
 
 # Inizializza una lista vuota per memorizzare tutte le righe
 all_rows = []
+
+# Crea un nuovo workbook
+wb = Workbook()
+
+# Seleziona il foglio attivo
+ws = wb.active
+
+# Definisci il nome della tabella e l'intervallo dei dati
+tabella = Table(displayName="Dati", ref="E1:G5")
+# Imposta i nomi delle colonne
+
+# Stile della tabella
+stile_tabella = TableStyleInfo(name="TableStyleMedium9", showFirstColumn=False,
+                                showLastColumn=False, showRowStripes=True, showColumnStripes=True)
+
+# Applica lo stile alla tabella
+tabella.tableStyleInfo = stile_tabella
+
+# Aggiungi la tabella al foglio di lavoro
+ws.add_table(tabella)
 
 # Itera attraverso ciascun file nella cartella
 for file in files:
@@ -26,18 +47,15 @@ for file in files:
         except Exception as e:
             print(f"Errore durante la lettura del file {file}: {e}")
 
-# Crea un nuovo file Excel e aggiungi i dati
+# Aggiungi i dati al foglio di lavoro Excel
+for row in all_rows:
+    ws.append(row)
+
+# Percorso del file Excel di output
 excel_file_path = 'output.xlsx'
+
+# Salva il foglio di lavoro Excel
 try:
-    # Crea un nuovo foglio di lavoro Excel
-    wb = Workbook()
-    ws = wb.active
-
-    # Aggiungi i dati al foglio di lavoro Excel
-    for row in all_rows:
-        ws.append(row)
-
-    # Salva il foglio di lavoro Excel
     wb.save(excel_file_path)
     print("Dati scritti con successo su", excel_file_path)
 except Exception as e:
